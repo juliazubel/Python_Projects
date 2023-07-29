@@ -1,3 +1,5 @@
+#Tic Tac Toe game using Curses library
+
 This project is a game of TicTacToe but not just in a normal terminal.
 To make it more advanced and fun I used a terminal-independent screen-painting and keyboard to play - thanks to 'curses' library
 
