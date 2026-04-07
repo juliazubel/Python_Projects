@@ -16,7 +16,7 @@ The project demonstrates fundamental **SQL database design principles**, includi
 
 # ER Diagram
 
-![ER Diagram]((https://github.com/juliazubel/Projects/blob/main/SQL%20Cinema%20Database/cinemaER.png))
+![ER Diagram](https://github.com/juliazubel/Projects/blob/main/SQL%20Cinema%20Database/cinemaER.png)
 
 ---
 
