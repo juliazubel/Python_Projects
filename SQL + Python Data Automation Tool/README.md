@@ -37,8 +37,7 @@ sql-data-automation/
 │
 ├── reports/             # Auto-created pipeline outputs
 │   ├── dashboard.png    ← 6-panel BI dashboard
-│   └── summary.txt      ← Executive text summary
-│
+│   
 ├── main.py              # CLI pipeline orchestrator
 └── README.md
 ```
