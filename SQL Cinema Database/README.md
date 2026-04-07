@@ -5,12 +5,18 @@ A relational database project designed to simulate the core operations of a cine
 The database allows storing and managing information about:
 
 * movies
-* cinema halls
 * screenings
 * customers
 * tickets
+etc.
 
 The project demonstrates fundamental **SQL database design principles**, including normalization, primary and foreign keys, and relational queries.
+
+---
+
+# ER Diagram
+
+
 
 ---
 
