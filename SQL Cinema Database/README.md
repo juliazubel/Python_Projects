@@ -53,10 +53,17 @@ Relationships include:
 Example structure:
 
 ```
-cinema-database/
+SQL Cinema Database/
 │
-├── schema.sql
-├── sample_data.sql
+├── sql
+  ├───-- 01_database.sql
+  ├───-- 02_tables.sql
+  ├───-- 03_constraints.sql
+  ├───-- 04_functions.sql
+  ├───-- 05_views.sql
+  ├───-- 06_procedures.sql
+  ├───-- 07_triggers.sql
+  └───-- 08_sample_data.sql
 ├── queries.sql
 └── README.md
 ```
@@ -78,38 +85,6 @@ Compatible with:
 
 ---
 
-# Example SQL Queries
-
-Example operations implemented in this project:
-
-### List all movies currently scheduled
-
-```sql
-SELECT title, duration
-FROM Movies;
-```
-
-### Show all screenings for a specific movie
-
-```sql
-SELECT m.title, s.screening_time
-FROM Screenings s
-JOIN Movies m ON s.movie_id = m.id
-WHERE m.title = 'Inception';
-```
-
-### List purchased tickets with customer names
-
-```sql
-SELECT c.name, m.title, s.screening_time
-FROM Tickets t
-JOIN Customers c ON t.customer_id = c.id
-JOIN Screenings s ON t.screening_id = s.id
-JOIN Movies m ON s.movie_id = m.id;
-```
-
----
-
 # Key Learning Goals
 
 This project demonstrates:
@@ -119,30 +94,8 @@ This project demonstrates:
 * SQL joins
 * data integrity using constraints
 * querying relational data
+* complex triggers and procedures
 
----
-
-# How to Run the Project
-
-1. Create a new database:
-
-```sql
-CREATE DATABASE cinema_db;
-```
-
-2. Run schema file:
-
-```bash
-mysql -u username -p cinema_db < schema.sql
-```
-
-3. Insert sample data:
-
-```bash
-mysql -u username -p cinema_db < sample_data.sql
-```
-
-4. Run example queries.
 
 ---
 
