@@ -3,9 +3,12 @@ This project demonstrates the use of Python and the RDKit library for basic chem
 
 RDKit is an open-source toolkit widely used in computational chemistry and drug discovery for analyzing and manipulating molecular structures programmatically. It provides tools for molecular representation, fingerprinting, property calculation, and visualization.
 The goal of this project is to explore how chemical data can be processed and analyzed using Python-based data science tools.
+
 ---
 # Project Overview
 This project includes examples of working with molecular data using RDKit. The notebook demonstrates how chemical compounds can be represented digitally and analyzed computationally.
+
+
 ---
 ## Key tasks covered in the project:
 - Parsing molecular structures from SMILES notation
