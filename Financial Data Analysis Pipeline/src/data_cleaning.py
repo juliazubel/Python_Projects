@@ -32,9 +32,14 @@ CATEGORY_VALUES  = {"Revenue", "Expenses", "Investment", "Refund", "Transfer"}
 
 def load_data(filepath: str | Path) -> pd.DataFrame:
     """Load CSV and enforce basic schema."""
-    filepath = Path("desktop/data/transactions.csv")
+    
+    filepath = Path(filepath)
+
+    # DEBUG
+    log.info("Trying to load file from: %s", filepath.resolve())
+
     if not filepath.exists():
-        raise FileNotFoundError(f"Dataset not found: {filepath}")
+        raise FileNotFoundError(f"Dataset not found: {filepath.resolve()}")
 
     df = pd.read_csv(filepath, parse_dates=["date"])
     log.info("Loaded %d rows × %d columns from '%s'", len(df), len(df.columns), filepath.name)
@@ -44,14 +49,6 @@ def load_data(filepath: str | Path) -> pd.DataFrame:
 
 
 def clean_data(df: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
-    """
-    Run full cleaning pipeline.
-
-    Returns
-    -------
-    df_clean : cleaned DataFrame
-    report   : dict with audit counts for each cleaning step
-    """
     report: dict = {}
     df = df.copy()
 
@@ -78,22 +75,16 @@ def _validate_schema(df: pd.DataFrame) -> None:
 
 def _handle_nulls(df: pd.DataFrame) -> tuple[pd.DataFrame, int]:
     before = len(df)
-    df = df.dropna(subset=["amount"])          # drop rows without amount
+    df = df.dropna(subset=["amount"])
     df["region"]     = df["region"].fillna("Unknown")
     df["department"] = df["department"].fillna("Unknown")
-    removed = before - len(df)
-    if removed:
-        log.info("Removed %d rows with null 'amount'", removed)
-    return df, removed
+    return df, before - len(df)
 
 
 def _remove_duplicates(df: pd.DataFrame) -> tuple[pd.DataFrame, int]:
     before = len(df)
     df = df.drop_duplicates(subset=["transaction_id"])
-    removed = before - len(df)
-    if removed:
-        log.warning("Removed %d duplicate transaction IDs", removed)
-    return df, removed
+    return df, before - len(df)
 
 
 def _fix_types(df: pd.DataFrame) -> tuple[pd.DataFrame, int]:
@@ -117,10 +108,6 @@ def _filter_invalid_categories(df: pd.DataFrame) -> tuple[pd.DataFrame, int]:
 
 
 def _flag_anomalies(df: pd.DataFrame) -> tuple[pd.DataFrame, int]:
-    """
-    Flags outliers using IQR method per category.
-    Adds boolean column `is_anomaly`.
-    """
     df["is_anomaly"] = False
     total_flagged = 0
 
@@ -134,21 +121,17 @@ def _flag_anomalies(df: pd.DataFrame) -> tuple[pd.DataFrame, int]:
             (df["amount"] < fence_lo) | (df["amount"] > fence_hi)
         )
         df.loc[mask, "is_anomaly"] = True
-        flagged = mask.sum()
-        total_flagged += flagged
-        if flagged:
-            log.info("Anomalies flagged in '%s': %d", cat, flagged)
+        total_flagged += mask.sum()
 
     return df, total_flagged
 
 
 def _add_time_features(df: pd.DataFrame) -> pd.DataFrame:
-    """Feature engineering: extract year, month, quarter, weekday."""
     df = df.copy()
-    df["year"]      = df["date"].dt.year
-    df["month"]     = df["date"].dt.month
-    df["quarter"]   = df["date"].dt.quarter
-    df["month_name"]= df["date"].dt.strftime("%b")
-    df["weekday"]   = df["date"].dt.day_name()
-    df["is_weekend"]= df["date"].dt.weekday >= 5
+    df["year"]       = df["date"].dt.year
+    df["month"]      = df["date"].dt.month
+    df["quarter"]    = df["date"].dt.quarter
+    df["month_name"] = df["date"].dt.strftime("%b")
+    df["weekday"]    = df["date"].dt.day_name()
+    df["is_weekend"] = df["date"].dt.weekday >= 5
     return df
