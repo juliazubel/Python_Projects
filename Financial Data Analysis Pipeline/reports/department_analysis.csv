@@ -1,0 +1,6 @@
+department,total_amount,avg_transaction,transaction_count,anomaly_count
+Marketing,1543995.81,4052.48,381,10
+R&D,1429653.66,3486.96,410,11
+Operations,1065790.9,2896.17,368,14
+Sales,-144837.12,-385.21,376,5
+HR,-367800.61,-865.41,425,7
