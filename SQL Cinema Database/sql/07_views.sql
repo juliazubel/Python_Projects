@@ -24,8 +24,9 @@ WHERE AgeRestriction = 18
 
 -- Movies from 2021
 CREATE OR ALTER VIEW [Films2021] AS
-SELECT Title, Director, Genre
-FROM Film
+SELECT f.Title, f.Director, g.Name as Genre
+FROM Film f
+LEFT OUTER JOIN Genre g On f.idGenre = g.idGenre
 WHERE ProductionYear = 2021;
 
 -- Available Seats
