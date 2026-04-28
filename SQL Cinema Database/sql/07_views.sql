@@ -42,15 +42,17 @@ JOIN Screen ON Screen.IdScreen=Screening.IdScreen
 GO
 
 -- One time customer
-CREATE OF ALTER VIEW [OneTimeCustomer]
+CREATE OR ALTER VIEW [OneTimeCustomer]
 AS
-SELECT IdCustomer, FirstName, LastName FROM Customer
+SELECT IdCustomer, FirstName, LastName 
+FROM Customer
 WHERE OneTime=1
 GO
 
 -- Regular Customer
-CREATE OF ALTER VIEW [RegularCustomer]
+CREATE OR ALTER VIEW [RegularCustomer]
 AS
-SELECT IdCustomer, FirstName, LastName FROM Customer
+SELECT IdCustomer, FirstName, LastName 
+FROM Customer
 WHERE OneTime=0
 GO
